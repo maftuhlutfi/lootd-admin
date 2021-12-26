@@ -5,6 +5,9 @@ module.exports = {
     './layout/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
+    fontFamily: {
+      'sans': ['Montserrat']
+    },
     extend: {
       colors: {
         primary: '#061135',
