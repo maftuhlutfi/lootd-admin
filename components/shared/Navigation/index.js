@@ -33,7 +33,7 @@ const Navigation = () => {
             <Image src='/logo-with-text.svg' width={88.22} height={48} />
             <div className="flex flex-col mt-16">
                 {navList.map((n, i) => 
-                    <Link href={n.link}>
+                    <Link href={n.link} key={i}>
                         <a className={`mb-12 flex items-center ${pathname == n.link ? 'text-primary' : 'text-disabled'}`}>
                             <i className={`${n.icon} text-2xl mr-4`} />
                             {n.title}
