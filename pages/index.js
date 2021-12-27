@@ -1,4 +1,8 @@
+import PostStatistic from '../components/Home/PostsStatistics'
+import Stats from '../components/Home/Stats'
+import TopPost from '../components/Home/TopPost'
 import CustomHead from '../components/shared/CustomHead'
+import DashboardTopMenu from '../components/shared/DashboardTopMenu'
 import DashboardLayout from '../layout/DashboardLayout'
 
 export default function Home() {
@@ -9,7 +13,14 @@ export default function Home() {
         description='Admin dashboard for LOOTD Admin'
       />
       <DashboardLayout>
-        asdas
+        <DashboardTopMenu title={'Admin'} subTitle={'Selamat Datang,'} />
+        <div className='flex w-full'>
+          <div className='w-full grid gap-10 mr-10'>
+            <Stats />
+            <PostStatistic />
+          </div>
+          <TopPost />
+        </div>
       </DashboardLayout>
     </>
   )
