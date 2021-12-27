@@ -8,8 +8,13 @@ const statList = [
     },
     {
         icon: 'icon-image',
+        title: 'Total Posts',
+        value: 10239
+    },
+    {
+        icon: 'icon-bag',
         title: 'Total Products',
-        value: 2011
+        value: 872
     },
     {
         icon: 'icon-star',
@@ -20,7 +25,7 @@ const statList = [
 
 const Stats = () => {
     return (
-        <div className="grid grid-cols-3 gap-5">
+        <div className="grid grid-cols-4 gap-5">
             {statList.map((s, i) => 
                 <StatsItem key={i} {...s} />
             )}
