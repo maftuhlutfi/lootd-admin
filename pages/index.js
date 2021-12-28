@@ -16,7 +16,7 @@ export default function Home() {
         description='Admin dashboard for LOOTD Admin'
       />
       <DashboardLayout>
-        <DashboardTopMenu title={'Admin'} subTitle={'Selamat Datang,'} />
+        <DashboardTopMenu title={'Admin'} subTitle={'Welcome Back!'} />
         <div className='flex w-full'>
           <div className='w-full grid gap-10 mr-10'>
             <Stats />
