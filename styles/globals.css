@@ -25,3 +25,7 @@
     border-radius: 8px;
     border: 0px solid #ffffff;
   }
+
+body {
+  min-width: 1280px;
+}

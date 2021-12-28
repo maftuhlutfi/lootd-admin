@@ -13,8 +13,8 @@ const RecentPosts = () => {
                         <a className="rounded-3xl transform duration-200 hover:-translate-y-2 overflow-hidden">
                             <Image 
                                 src={`/mock-pict/post (${i+1}).jpg`} 
-                                width={175} 
-                                height={175} 
+                                width={300} 
+                                height={300} 
                                 layout="responsive" 
                                 className="object-cover object-center" 
                             />

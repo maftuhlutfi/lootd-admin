@@ -28,7 +28,7 @@ const topBrandData = [
 
 const TopBrandsStatistics = () => {
     return (
-        <Card className='w-[400px] shrink-0 flex flex-col'>
+        <Card className='min-w-[400px] w-1/3 shrink-0 flex flex-col'>
             <CardTitle title={'Top 5 Brands'} className='mb-8' />
             <TopBrandsChart data={topBrandData} />
             <Legends data={topBrandData} />

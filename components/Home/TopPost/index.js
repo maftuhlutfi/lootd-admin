@@ -4,7 +4,7 @@ import CardTitle from "../../shared/Card/CardTitle";
 
 const TopPost = () => {
     return (
-        <Card className='w-[400px] shrink-0 px-0 flex flex-col'>
+        <Card className='min-w-[400px] w-1/3 shrink-0 px-0 flex flex-col'>
             <div className="px-6">
                 <CardTitle title={'Top OOTD Post'} />
             </div>
