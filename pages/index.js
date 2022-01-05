@@ -1,3 +1,4 @@
+import WithAdminPage from '../components/HOC/WithAdminPage'
 import PostStatistic from '../components/Home/PostsStatistics'
 import RecentPosts from '../components/Home/RecentPosts'
 import Stats from '../components/Home/Stats'
@@ -8,10 +9,10 @@ import CustomHead from '../components/shared/CustomHead'
 import DashboardTopMenu from '../components/shared/DashboardTopMenu'
 import DashboardLayout from '../layout/DashboardLayout'
 
-export default function Home() {
+function Home() {
   return (
     <>
-      <CustomHead 
+      <CustomHead
         title='Dashboard - LOOTD Admin'
         description='Admin dashboard for LOOTD Admin'
       />
@@ -35,3 +36,5 @@ export default function Home() {
     </>
   )
 }
+
+export default WithAdminPage(Home)
