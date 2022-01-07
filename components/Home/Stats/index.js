@@ -1,36 +1,37 @@
 import StatsItem from "./StatsItem";
 
-const statList = [
-    {
+const statList = {
+    users: {
         icon: 'icon-profile',
-        title: 'Total Users',
-        value: 100
+        title: 'Total Users'
     },
-    {
+    posts: {
         icon: 'icon-image',
-        title: 'Total Posts',
-        value: 10239
+        title: 'Total Posts'
     },
-    {
-        icon: 'icon-bag',
-        title: 'Total Products',
-        value: 872
-    },
-    {
+    brands: {
         icon: 'icon-star',
-        title: 'Total Brands',
-        value: 120
+        title: 'Total Brands'
     },
-]
+    products: {
+        icon: 'icon-bag',
+        title: 'Total Products'
+    },
+}
 
-const Stats = () => {
+const Stats = ({ data }) => {
+    const formattedDate = data.map(d => ({
+        value: d.total,
+        ...statList[d.id]
+    }))
+
     return (
         <div className="grid grid-cols-4 gap-5">
-            {statList.map((s, i) => 
+            {formattedDate.map((s, i) =>
                 <StatsItem key={i} {...s} />
             )}
         </div>
     );
 }
- 
+
 export default Stats;

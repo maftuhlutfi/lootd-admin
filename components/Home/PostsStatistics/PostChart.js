@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -48,21 +48,21 @@ function createGradient(ctx = CanvasRenderingContext2D, area = ChartArea) {
   return gradient;
 }
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: labels.map(() => Math.floor(Math.random() * (108 - 20 + 1) + 20)),
-    },
-  ],
-};
-
-export default function PostChart() {
+export default function PostChart({ data }) {
   const chartRef = useRef(null);
   const [chartData, setChartData] = useState({
     datasets: [],
   });
+
+  const statisticData = {
+    labels,
+    datasets: [
+      {
+        label: 'Total Posts',
+        data,
+      },
+    ],
+  };
 
   useEffect(() => {
     const chart = chartRef.current;
@@ -72,8 +72,8 @@ export default function PostChart() {
     }
 
     const chartData = {
-      ...data,
-      datasets: data.datasets.map(dataset => ({
+      ...statisticData,
+      datasets: statisticData.datasets.map(dataset => ({
         ...dataset,
         backgroundColor: createGradient(chart.ctx, chart.chartArea),
         borderRadius: 9999,
