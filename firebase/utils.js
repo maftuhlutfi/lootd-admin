@@ -101,7 +101,7 @@ export const getRecentPosts = async () => {
 }
 
 export const getTopBrandsStatisctic = async () => {
-    const q = query(collection(db, 'brands'), orderBy('postsCount', 'desc')s)
+    const q = query(collection(db, 'brands'), orderBy('postsCount', 'desc'), limit(5))
     const querySnapshot = await getDocs(q)
 
     let data = []
