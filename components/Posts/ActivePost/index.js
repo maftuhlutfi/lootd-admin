@@ -1,16 +1,33 @@
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { getMultipleProductsById, getUserData } from "../../../firebase/utils";
+import getIdFromPath from "../../../utils/getIdFromPath";
 import Card from "../../shared/Card";
 import CardTitle from "../../shared/Card/CardTitle";
+import ProductItem from "./ProductItem";
 
-const ActivePost = ({activePost}) => {
+const ActivePost = ({ activePost }) => {
+    const [userData, setUserData] = useState(null)
+    const [productsList, setProductsList] = useState([])
+
+    useEffect(() => {
+        if (!activePost || productsList.length) return
+        getUserData(activePost, getUserData({ uid: getIdFromPath(activePost.user) }, data => setUserData(data)))
+        const getProductLists = async () => {
+            const res = await getMultipleProductsById(activePost.products.map(p => getIdFromPath(p)))
+            setProductsList(res)
+        }
+        getProductLists()
+    }, [activePost])
+
     if (!activePost) return '';
 
     const Status = () => {
         if (!activePost) return ''
         if (activePost.status == 'requested') return (
             <div className="flex items-center">
-                <i className="icon-check-square bg-linear-green bg-clip-text text-4xl text-transparent mr-2 cursor-pointer"  />
-                <i className="icon-close-square bg-linear-red bg-clip-text text-4xl text-transparent cursor-pointer"  />
+                <i className="icon-check-square bg-linear-green bg-clip-text text-4xl text-transparent mr-2 cursor-pointer" />
+                <i className="icon-close-square bg-linear-red bg-clip-text text-4xl text-transparent cursor-pointer" />
             </div>
         )
         return (
@@ -32,9 +49,9 @@ const ActivePost = ({activePost}) => {
             <div className="flex flex-col mt-6 px-6">
                 <div className="flex items-center justify-between w-full">
                     <div className="flex items-center">
-                        <Image src={activePost.user.image} width={36} height={36} className="object-cover object-center rounded-full" />
+                        <Image src={userData ? userData.image : '/icons/default-user.svg'} width={36} height={36} className="object-cover object-center rounded-full" />
                         <div className="ml-3">
-                            <p className="text-sm font-bold mb-1">{activePost.user.name}</p>
+                            <p className="text-sm font-bold mb-1">{userData ? userData.displayName : ''}</p>
                             <p className="text-disabled text-xs">{activePost.publishedDate}</p>
                         </div>
                     </div>
@@ -46,14 +63,8 @@ const ActivePost = ({activePost}) => {
                 <div>
                     <div className="text-sm font-semibold mb-4">Local Pride Products</div>
                     <div className="flex flex-col">
-                        {activePost.products.map(p => 
-                            <div key={p.id} className="flex items-center mb-2 last:mb-0">
-                                <Image src={p.image} width={64} height={64} className="object-contain object-center rounded-[20px]" />
-                                <div className="ml-4">
-                                    <p className="text-sm font-semibold mb-1">{p.name}</p>
-                                    <p className="text-xs text-secondary">{p.brand}</p>
-                                </div>
-                            </div>
+                        {productsList.map(p =>
+                            <ProductItem key={p.id} {...p} />
                         )}
                     </div>
                 </div>
@@ -61,5 +72,5 @@ const ActivePost = ({activePost}) => {
         </Card>
     );
 }
- 
+
 export default ActivePost;

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Select from '../shared/Input/Select'
 import Option from '../shared/Input/Select/Option'
 
-const filterData = ['Requested', 'Accepted', 'Denied', 'All']
+const filterData = ['requested', 'accepted', 'denied', 'all']
 
 const PostsFilter = () => {
     const router = useRouter()
@@ -25,11 +25,11 @@ const PostsFilter = () => {
 
     return (
         <Select icon={'icon-filter'} value={filter} onChange={handleFilterChange}>
-            {filterData.map((d, i) => 
+            {filterData.map((d, i) =>
                 <Option key={i} value={d}>{d}</Option>
             )}
         </Select>
     );
 }
- 
+
 export default PostsFilter;

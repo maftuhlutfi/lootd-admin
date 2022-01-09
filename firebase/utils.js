@@ -1,13 +1,16 @@
 import { async } from "@firebase/util"
-import { collection, doc, getDoc, getDocs, limit, orderBy, query, where } from "firebase/firestore"
+import { collection, doc, documentId, getDoc, getDocs, limit, orderBy, query, where } from "firebase/firestore"
 import formatPostDate from "../utils/formatPostDate"
+import getIdFromPath from "../utils/getIdFromPath"
 import { db } from "./clientApp"
 
 export const getUserData = async (authUser, cb) => {
     const docRef = doc(db, `/users/${authUser.uid}`)
     const docSnap = await getDoc(docRef)
 
-    await cb(docSnap.data())
+    if (typeof cb == 'function') {
+        await cb(docSnap.data())
+    }
 }
 
 export const getCounter = async () => {
@@ -114,4 +117,56 @@ export const getTopBrandsStatisctic = async () => {
     })
 
     return data
+}
+
+export const getPosts = async (filter) => {
+    const q = query(collection(db, 'posts'), orderBy('publishedDate', 'desc'), where('status', 'in', filter))
+    const querySnapshot = await getDocs(q)
+
+    let data = []
+
+    querySnapshot.forEach(d => {
+        data = [...data, {
+            ...d.data(),
+            publishedDate: formatPostDate(d.data().publishedDate.toDate()),
+            user: d.data().user.path,
+            products: d.data().products.map(p => p.path),
+            id: d.id
+        }]
+    })
+
+    return data
+}
+
+export const getMultipleProductsById = async (productsId) => {
+    const q = query(collection(db, 'products'), where(documentId(), 'in', productsId))
+    const querySnapshot = await getDocs(q)
+
+    let data = []
+
+    querySnapshot.forEach(d => {
+        data = [...data, {
+            ...d.data(),
+            brand: getIdFromPath(d.data().brand.path),
+            id: d.id
+        }]
+    })
+
+    return data
+}
+
+export const getBrandById = async (brandId) => {
+    const q = query(collection(db, 'brands'), where(documentId(), '==', brandId))
+    const querySnapshot = await getDocs(q)
+
+    let data = []
+
+    querySnapshot.forEach(d => {
+        data = [...data, {
+            ...d.data(),
+            id: d.id
+        }]
+    })
+
+    return data[0]
 }
