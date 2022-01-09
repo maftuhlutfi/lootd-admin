@@ -1,8 +1,9 @@
 import { async } from "@firebase/util"
-import { collection, doc, documentId, getDoc, getDocs, limit, orderBy, query, where, updateDoc } from "firebase/firestore"
+import { collection, doc, documentId, getDoc, getDocs, limit, orderBy, query, where, updateDoc, setDoc, addDoc } from "firebase/firestore"
+import { deleteObject, getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage"
 import formatPostDate from "../utils/formatPostDate"
 import getIdFromPath from "../utils/getIdFromPath"
-import { db } from "./clientApp"
+import { db, storage } from "./clientApp"
 
 export const getUserData = async (authUser, cb) => {
     const docRef = doc(db, `/users/${authUser.uid}`)
@@ -175,4 +176,48 @@ export const updatePostStatus = async (id, status) => {
     const docRef = doc(db, `/posts/${id}`)
     const res = await updateDoc(docRef, { status })
     console.log(res)
+}
+
+export const getAllBrands = async () => {
+    const q = query(collection(db, 'brands'))
+    const querySnapshot = await getDocs(q)
+
+    let data = []
+
+    querySnapshot.forEach(d => {
+        data = [...data, {
+            ...d.data(),
+            id: d.id
+        }]
+    })
+
+    return data
+}
+
+export const addNewBrand = async (input) => {
+    const storageRef = ref(storage, `${input.image.name}`)
+
+    uploadBytes(storageRef, input.image)
+        .then(async (res) => {
+            const url = await getDownloadURL(storageRef)
+
+            addDoc(collection(db, 'brands'), { ...input, image: url }).then(res => console.log(res))
+        })
+}
+
+export const editBrand = async (id, input, oldImage) => {
+    const newImageRef = ref(storage, `${input.image.name}`)
+
+    if (oldImage) {
+        uploadBytes(newImageRef, input.image)
+            .then(async (res) => {
+                const url = await getDownloadURL(newImageRef)
+
+                setDoc(doc(db, `brands/${id}`), { ...input, image: url }).then(res => console.log(res))
+                const oldImageRef = ref(storage, oldImage)
+                deleteObject(oldImageRef).then(() => { })
+            })
+    } else {
+        setDoc(doc(db, `brands/${id}`), input).then(res => console.log(res))
+    }
 }

@@ -5,32 +5,10 @@ import Button from '../components/shared/Button';
 import CustomHead from '../components/shared/CustomHead'
 import DashboardTopMenu from '../components/shared/DashboardTopMenu'
 import TextFieldWithIcon from '../components/shared/Input/TextFieldWithIcon';
+import { getAllBrands } from '../firebase/utils';
 import DashboardLayout from '../layout/DashboardLayout'
 
-const brandsData = [
-    {
-        name: 'Roughneck 1991',
-        description: 'Description from roughneck',
-        location: 'Bandung - Jawa Barat',
-        website: 'http://roughneck1991.com',
-        instagram: 'roughneck1991',
-        shopee: 'rougneck1991',
-        tokopedia: 'roughneck 1991',
-        image: '/mock-pict/roughneck.jpg'
-    },
-    {
-        name: 'Ventela',
-        description: 'Description from centela',
-        location: 'Bandung - Jawa Barat',
-        website: 'http://ventela.com',
-        instagram: 'ventela',
-        shopee: 'ventela',
-        tokopedia: 'ventela',
-        image: '/mock-pict/ventela.png'
-    }
-]
-
-const BrandsPage = () => {
+const BrandsPage = ({ brands }) => {
     const [showAddEditModal, setShowAddEditModal] = useState(false)
     const [activeBrand, setActiveBrand] = useState(null)
 
@@ -43,10 +21,14 @@ const BrandsPage = () => {
 
     const handleEditBrand = index => {
         setShowAddEditModal(true)
-        setActiveBrand({ ...brandsData[index], index })
+        setActiveBrand({ ...brands[index], index })
     }
 
-    const filteredBrandsData = brandsData.filter(b => b.name.toLowerCase().includes(searchInput.toLowerCase()))
+    if (!brands) {
+        return ''
+    }
+
+    const filteredBrandsData = brands.filter(b => b.name.toLowerCase().includes(searchInput.toLowerCase()))
 
     return (
         <>
@@ -72,3 +54,13 @@ const BrandsPage = () => {
 }
 
 export default BrandsPage;
+
+export async function getServerSideProps(context) {
+    const brands = await getAllBrands()
+
+    return {
+        props: {
+            brands
+        },
+    }
+}
