@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ActivePost from '../components/Posts/ActivePost'
 import PostsFilter from '../components/Posts/PostsFilter'
 import PostsList from '../components/Posts/PostsList'
@@ -10,12 +10,17 @@ import DashboardLayout from '../layout/DashboardLayout'
 
 
 export default function Posts({ posts }) {
-    const filter = useRouter().query.filter
+    const router = useRouter()
+    const filter = router.query.filter
     const [activePost, setActivePost] = useState(null)
 
     const handleActivePostChange = post => {
         setActivePost(post)
     }
+
+    useEffect(() => {
+        setActivePost(null)
+    }, [router])
 
     if (!posts) {
         return ''

@@ -5,6 +5,7 @@ import getIdFromPath from "../../../utils/getIdFromPath";
 import Card from "../../shared/Card";
 import CardTitle from "../../shared/Card/CardTitle";
 import ProductItem from "./ProductItem";
+import Status from "./Status";
 
 const ActivePost = ({ activePost }) => {
     const [userData, setUserData] = useState(null)
@@ -21,22 +22,6 @@ const ActivePost = ({ activePost }) => {
     }, [activePost])
 
     if (!activePost) return '';
-
-    const Status = () => {
-        if (!activePost) return ''
-        if (activePost.status == 'requested') return (
-            <div className="flex items-center">
-                <i className="icon-check-square bg-linear-green bg-clip-text text-4xl text-transparent mr-2 cursor-pointer" />
-                <i className="icon-close-square bg-linear-red bg-clip-text text-4xl text-transparent cursor-pointer" />
-            </div>
-        )
-        return (
-            <div className={`flex items-center`}>
-                <i className={`${activePost.status == 'accepted' ? 'icon-check-square bg-linear-green' : 'icon-close-square bg-linear-red'} bg-clip-text text-4xl text-transparent mr-2`} />
-                <span className={`capitalize text-sm font-semibold ${activePost.status == 'accepted' ? 'text-custom-green' : 'text-custom-red'}`}>{activePost.status}</span>
-            </div>
-        )
-    }
 
     return (
         <Card className={`shrink-0 px-0 flex-col transform min-w-[400px] w-1/3 flex`}>
@@ -56,7 +41,7 @@ const ActivePost = ({ activePost }) => {
                         </div>
                     </div>
                     <div className="flex flex-col items-center">
-                        <Status />
+                        <Status status={activePost.status} id={activePost.id} />
                     </div>
                 </div>
                 <p className="text-sm text-secondary my-6 leading-relaxed">{activePost.caption}</p>

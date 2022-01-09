@@ -1,5 +1,5 @@
 import { async } from "@firebase/util"
-import { collection, doc, documentId, getDoc, getDocs, limit, orderBy, query, where } from "firebase/firestore"
+import { collection, doc, documentId, getDoc, getDocs, limit, orderBy, query, where, updateDoc } from "firebase/firestore"
 import formatPostDate from "../utils/formatPostDate"
 import getIdFromPath from "../utils/getIdFromPath"
 import { db } from "./clientApp"
@@ -169,4 +169,10 @@ export const getBrandById = async (brandId) => {
     })
 
     return data[0]
+}
+
+export const updatePostStatus = async (id, status) => {
+    const docRef = doc(db, `/posts/${id}`)
+    const res = await updateDoc(docRef, { status })
+    console.log(res)
 }
