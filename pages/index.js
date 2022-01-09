@@ -52,7 +52,7 @@ export async function getServerSideProps(context) {
   const recentPosts = await getRecentPosts()
   const topBrandsStatiscticData = await getTopBrandsStatisctic()
 
-  console.log(topBrandsStatiscticData)
+  console.log(topPost)
 
   return {
     props: {
