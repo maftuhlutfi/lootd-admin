@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import useOnClickOutside from "../../../../hooks/useOnClickOutside";
 
-const Select = ({ children, value, onChange, placeholder, icon }) => {
+const Dropdown = ({ children, value, onChange, placeholder, icon }) => {
     const ref = useRef()
     useOnClickOutside(ref, () => setIsFocus(false))
 
@@ -33,4 +33,4 @@ const Select = ({ children, value, onChange, placeholder, icon }) => {
     );
 }
 
-export default Select;
+export default Dropdown;

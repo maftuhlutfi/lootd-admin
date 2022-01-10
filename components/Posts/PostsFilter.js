@@ -1,8 +1,8 @@
 
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import Select from '../shared/Input/Select'
-import Option from '../shared/Input/Select/Option'
+import Dropdown from '../shared/Input/Dropdown'
+import DropdownItem from '../shared/Input/DropDown/DropdownItem'
 
 const filterData = ['requested', 'accepted', 'denied', 'all']
 
@@ -24,11 +24,11 @@ const PostsFilter = () => {
     }, [router.query.filter])
 
     return (
-        <Select icon={'icon-filter'} value={filter} onChange={handleFilterChange}>
+        <Dropdown icon={'icon-filter'} value={filter} onChange={handleFilterChange}>
             {filterData.map((d, i) =>
-                <Option key={i} value={d}>{d}</Option>
+                <DropdownItem key={i} value={d}>{d}</Drop>
             )}
-        </Select>
+        </Dropdown>
     );
 }
 

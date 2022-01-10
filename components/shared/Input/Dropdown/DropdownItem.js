@@ -1,4 +1,4 @@
-const Option = ({ children, onChange, value }) => {
+const DropdownItem = ({ children, onChange, value }) => {
     return (
         <div className="py-3 px-4 hover:bg-gray-200 cursor-pointer text-center capitalize" onClick={() => onChange()}>
             {children}
@@ -6,4 +6,4 @@ const Option = ({ children, onChange, value }) => {
     );
 }
 
-export default Option;
+export default DropdownItem;
