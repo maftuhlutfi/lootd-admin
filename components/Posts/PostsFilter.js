@@ -26,7 +26,7 @@ const PostsFilter = () => {
     return (
         <Dropdown icon={'icon-filter'} value={filter} onChange={handleFilterChange}>
             {filterData.map((d, i) =>
-                <DropdownItem key={i} value={d}>{d}</Drop>
+                <DropdownItem key={i} value={d}>{d}</DropdownItem>
             )}
         </Dropdown>
     );
