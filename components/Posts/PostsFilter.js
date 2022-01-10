@@ -2,7 +2,7 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import Dropdown from '../shared/Input/Dropdown'
-import DropdownItem from '../shared/Input/DropDown/DropdownItem'
+import DropdownItem from '../shared/Input/Dropdown/DropdownItem'
 
 const filterData = ['requested', 'accepted', 'denied', 'all']
 
