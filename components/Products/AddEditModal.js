@@ -115,7 +115,7 @@ const AddEditModal = ({ show, productData, onClose }) => {
                             <Select placeholder='Category' className='bg-purple-light' name='category' value={category} onChange={handleChange} optionList={['Select category', ...categoryList]} required />
                         </div>
                     </div>
-                    <Button className={'relative mx-auto w-full'}>Save</Button>
+                    <Button type='primary' className={'relative mx-auto w-full'}>Save</Button>
                 </form>
             </Modal>
             <Message {...message} />

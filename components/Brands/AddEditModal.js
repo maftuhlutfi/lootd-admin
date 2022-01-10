@@ -101,7 +101,12 @@ const AddEditModal = ({ show, brandData, onClose }) => {
                         <TextField placeholder='Shopee' className='bg-purple-light' name='shopee' value={shopee} onChange={handleChange} required />
                         <TextField placeholder='Tokopedia' className='bg-purple-light' name='tokopedia' value={tokopedia} onChange={handleChange} required />
                     </div>
-                    <Button className={'relative mx-auto w-full'}>Save</Button>
+                    <div className="flex items-center">
+                        <Button type='danger' outlined className={'relative mx-auto w-1/4 mr-4 shrink-0'}>
+                            Delete
+                        </Button>
+                        <Button type='primary' className={'relative mx-auto w-full'}>Save</Button>
+                    </div>
                 </form>
             </Modal>
             <Message {...message} />

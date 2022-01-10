@@ -40,7 +40,7 @@ const ProductsPage = ({ products }) => {
                 <DashboardTopMenu title={'Products'} subTitle={'Manage Local'} />
                 <div className='flex items-center justify-between w-full'>
                     <TextFieldWithIcon value={searchInput} onChange={e => setSearchInput(e.target.value)} icon={'icon-search'} placeholder='Search products' className='w-[400px]' />
-                    <Button onClick={handleAddNewProduct}>Add New Product</Button>
+                    <Button type='primary' onClick={handleAddNewProduct}>Add New Product</Button>
                 </div>
                 <div className='grid grid-cols-4 items-start gap-6 w-full'>
                     {filteredProductsData.map((p, i) =>

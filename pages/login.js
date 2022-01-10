@@ -60,7 +60,7 @@ const LoginPage = () => {
                     <form onSubmit={handleSubmit} className="w-full mt-8 flex flex-col">
                         <TextField type='email' name='email' value={email} onChange={handleChange} placeholder='Email' className='bg-purple-light mb-4' />
                         <TextField type='password' name='password' value={password} onChange={handleChange} placeholder='Password' className='bg-purple-light mb-6' />
-                        <Button>Login</Button>
+                        <Button type='primary'>Login</Button>
                     </form>
                 </div>
             </div>

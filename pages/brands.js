@@ -40,7 +40,7 @@ const BrandsPage = ({ brands }) => {
                 <DashboardTopMenu title={'Brands'} subTitle={'Manage Local'} />
                 <div className='flex items-center justify-between w-full'>
                     <TextFieldWithIcon value={searchInput} onChange={e => setSearchInput(e.target.value)} icon={'icon-search'} placeholder='Search brands' className='w-[400px]' />
-                    <Button onClick={handleAddNewBrand}>Add New Brand</Button>
+                    <Button type='primary' onClick={handleAddNewBrand}>Add New Brand</Button>
                 </div>
                 <div className='grid grid-cols-7 items-start gap-6 w-full'>
                     {filteredBrandsData.map((b, i) =>
