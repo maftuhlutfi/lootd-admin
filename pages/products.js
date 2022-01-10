@@ -5,30 +5,10 @@ import Button from '../components/shared/Button';
 import CustomHead from '../components/shared/CustomHead'
 import DashboardTopMenu from '../components/shared/DashboardTopMenu'
 import TextFieldWithIcon from '../components/shared/Input/TextFieldWithIcon';
+import { getAllProducts } from '../firebase/utils';
 import DashboardLayout from '../layout/DashboardLayout'
 
-const productsData = [
-    {
-        name: 'Roughneck 1991 Jacket',
-        brand: 'Roughneck',
-        category: 'Jacket',
-        image: '/mock-pict/product (1).jpg'
-    },
-    {
-        name: 'Ventela 70s White',
-        brand: 'Ventela',
-        category: 'Footwear',
-        image: '/mock-pict/product (2).jpg'
-    },
-    {
-        name: 'Erigo Cap White',
-        brand: 'Erigo',
-        category: 'Hat',
-        image: '/mock-pict/product (3).jpg'
-    },
-]
-
-const ProductsPage = () => {
+const ProductsPage = ({ products }) => {
     const [showAddEditModal, setShowAddEditModal] = useState(false)
     const [activeProduct, setActiveProduct] = useState(null)
 
@@ -41,10 +21,14 @@ const ProductsPage = () => {
 
     const handleEditProduct = index => {
         setShowAddEditModal(true)
-        setActiveProduct({ ...productsData[index], index })
+        setActiveProduct({ ...products[index], index })
     }
 
-    const filteredProductsData = productsData.filter(b => b.name.toLowerCase().includes(searchInput.toLowerCase()))
+    if (!products) {
+        return ''
+    }
+
+    const filteredProductsData = products.filter(b => b.name.toLowerCase().includes(searchInput.toLowerCase()))
 
     return (
         <>
@@ -59,8 +43,8 @@ const ProductsPage = () => {
                     <Button onClick={handleAddNewProduct}>Add New Product</Button>
                 </div>
                 <div className='grid grid-cols-4 items-start gap-6 w-full'>
-                    {filteredProductsData.map((b, i) =>
-                        <ProductItem key={i} onClick={() => handleEditProduct(i)} {...b} />
+                    {filteredProductsData.map((p, i) =>
+                        <ProductItem key={i} onClick={() => handleEditProduct(i)} {...p} />
                     )}
                 </div>
             </DashboardLayout>
@@ -70,3 +54,13 @@ const ProductsPage = () => {
 }
 
 export default ProductsPage;
+
+export async function getServerSideProps(context) {
+    const products = await getAllProducts()
+
+    return {
+        props: {
+            products: products.map(p => ({ ...p, postCount: null }))
+        },
+    }
+}

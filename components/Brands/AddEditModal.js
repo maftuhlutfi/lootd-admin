@@ -84,7 +84,7 @@ const AddEditModal = ({ show, brandData, onClose }) => {
             }, 1000)
             return () => clearTimeout(timeout)
         }
-    })
+    }, [message])
 
     return (
         <>
