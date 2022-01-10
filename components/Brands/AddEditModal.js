@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { addNewBrand, editBrand } from "../../firebase/utils";
+import { addNewBrand, deleteBrand, editBrand } from "../../firebase/utils";
 import Button from "../shared/Button";
 import ImageInput from "../shared/Input/ImageInput";
 import TextArea from "../shared/Input/TextArea";
@@ -67,6 +67,16 @@ const AddEditModal = ({ show, brandData, onClose }) => {
         }
     }
 
+    const handleDelete = async e => {
+        e.preventDefault()
+        deleteBrand(brandData.id).then(() => {
+            setMessage({
+                type: 'success',
+                message: 'Successfully delete brand'
+            })
+        })
+    }
+
     useEffect(() => {
         if (show && brandData) {
             setInput(brandData)
@@ -102,7 +112,7 @@ const AddEditModal = ({ show, brandData, onClose }) => {
                         <TextField placeholder='Tokopedia' className='bg-purple-light' name='tokopedia' value={tokopedia} onChange={handleChange} required />
                     </div>
                     <div className="flex items-center">
-                        <Button type='danger' outlined className={'relative mx-auto w-1/4 mr-4 shrink-0'}>
+                        <Button type='danger' onClick={handleDelete} outlined className={'relative mx-auto w-1/4 mr-4 shrink-0'}>
                             Delete
                         </Button>
                         <Button type='primary' className={'relative mx-auto w-full'}>Save</Button>

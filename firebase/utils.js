@@ -1,5 +1,5 @@
 import { async } from "@firebase/util"
-import { collection, doc, documentId, getDoc, getDocs, limit, orderBy, query, where, updateDoc, setDoc, addDoc, FieldValue, increment } from "firebase/firestore"
+import { collection, doc, documentId, getDoc, getDocs, limit, orderBy, query, where, updateDoc, setDoc, addDoc, FieldValue, increment, deleteDoc } from "firebase/firestore"
 import { deleteObject, getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage"
 import formatPostDate from "../utils/formatPostDate"
 import getIdFromPath from "../utils/getIdFromPath"
@@ -223,6 +223,10 @@ export const editBrand = async (id, input, oldImage) => {
     }
 }
 
+export const deleteBrand = async (id) => {
+    return deleteDoc(doc(db, `brands/${id}`))
+}
+
 export const getAllProducts = async () => {
     const q = query(collection(db, 'products'))
     const querySnapshot = await getDocs(q)
@@ -272,4 +276,8 @@ export const editProduct = async (id, input, oldImage) => {
     } else {
         setDoc(doc(db, `products/${id}`), { ...input, brand: brandRef }).then(res => console.log(res))
     }
+}
+
+export const deleteProduct = async (id) => {
+    return deleteDoc(doc(db, `products/${id}`))
 }

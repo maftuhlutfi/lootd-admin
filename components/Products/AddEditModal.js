@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { addNewProduct, editProduct, getAllBrands, getBrandById } from "../../firebase/utils";
+import { addNewProduct, deleteProduct, editProduct, getAllBrands, getBrandById } from "../../firebase/utils";
 import Button from "../shared/Button";
 import ImageInput from "../shared/Input/ImageInput";
 import TextField from "../shared/Input/TextField";
@@ -67,6 +67,16 @@ const AddEditModal = ({ show, productData, onClose }) => {
         }
     }
 
+    const handleDelete = async e => {
+        e.preventDefault()
+        deleteProduct(productData.id).then(() => {
+            setMessage({
+                type: 'success',
+                message: 'Successfully delete product'
+            })
+        })
+    }
+
     useEffect(() => {
         if (message) {
             const timeout = setTimeout(() => {
@@ -115,7 +125,12 @@ const AddEditModal = ({ show, productData, onClose }) => {
                             <Select placeholder='Category' className='bg-purple-light' name='category' value={category} onChange={handleChange} optionList={['Select category', ...categoryList]} required />
                         </div>
                     </div>
-                    <Button type='primary' className={'relative mx-auto w-full'}>Save</Button>
+                    <div className="flex items-center">
+                        <Button type='danger' onClick={handleDelete} outlined className={'relative mx-auto w-1/4 mr-4 shrink-0'}>
+                            Delete
+                        </Button>
+                        <Button type='primary' className={'relative mx-auto w-full'}>Save</Button>
+                    </div>
                 </form>
             </Modal>
             <Message {...message} />
