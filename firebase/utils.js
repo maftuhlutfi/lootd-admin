@@ -202,7 +202,7 @@ export const addNewBrand = async (input) => {
             const url = await getDownloadURL(storageRef)
 
             addDoc(collection(db, 'brands'), { ...input, image: url }).then(res => console.log(res))
-            setDoc(doc(db, 'counter/brands'), { total: increment(1) })
+            updateDoc(doc(db, 'counter/brands'), { total: increment(1) })
         })
 }
 
@@ -214,7 +214,7 @@ export const editBrand = async (id, input, oldImage) => {
             .then(async (res) => {
                 const url = await getDownloadURL(newImageRef)
 
-                setDoc(doc(db, `brands/${id}`), { ...input, image: url }).then(res => console.log(res))
+                setDoc(doc(db, `brands/${id}`), { ...input, image: url }).then(async res => console.log(res))
                 const oldImageRef = ref(storage, oldImage)
                 deleteObject(oldImageRef).then(() => { })
             })
@@ -249,8 +249,10 @@ export const addNewProduct = async (input) => {
             console.log(input)
             const brandRef = doc(db, input.brand)
 
-            addDoc(collection(db, 'products'), { ...input, image: url, postsCount: 0, brand: brandRef }).then(res => console.log(res))
-            setDoc(doc(db, 'counter/products'), { total: increment(1) })
+            addDoc(collection(db, 'products'), { ...input, image: url, postsCount: 0, brand: brandRef }).then(async res => {
+                await updateDoc(doc(db, 'counter/products'), { total: increment(1) })
+                return res
+            })
         })
 }
 

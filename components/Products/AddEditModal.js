@@ -111,8 +111,8 @@ const AddEditModal = ({ show, productData, onClose }) => {
                         <ImageInput id='product-image' name='image' className='h-full w-full' image={imageData} onChange={handleChange} />
                         <div className="flex flex-col">
                             <TextField placeholder='Name' className='bg-purple-light mb-6' name='name' value={name} onChange={handleChange} required />
-                            <Select id='brand' placeholder='Brand' className='bg-purple-light mb-6' name='brand' value={brand} onChange={handleChange} optionList={brandsData.map(b => b.name)} required />
-                            <Select placeholder='Category' className='bg-purple-light' name='category' value={category} onChange={handleChange} optionList={categoryList} required />
+                            <Select id='brand' placeholder='Brand' className='bg-purple-light mb-6' name='brand' value={brand} onChange={handleChange} optionList={['Select brand', ...brandsData.map(b => b.name)]} required />
+                            <Select placeholder='Category' className='bg-purple-light' name='category' value={category} onChange={handleChange} optionList={['Select category', ...categoryList]} required />
                         </div>
                     </div>
                     <Button className={'relative mx-auto w-full'}>Save</Button>
